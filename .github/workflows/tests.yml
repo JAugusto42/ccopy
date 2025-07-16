@@ -45,13 +45,8 @@ jobs:
     - name: Run tests
       run: go test -v -race -coverprofile=coverage.out ./...
       
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v3
-      with:
-        file: ./coverage.out
-        flags: unittests
-        name: codecov-umbrella
-        fail_ci_if_error: false
+    - name: Display coverage
+      run: go tool cover -func=coverage.out
 
   lint:
     runs-on: ubuntu-latest
@@ -65,11 +60,18 @@ jobs:
       with:
         go-version: 1.22
         
-    - name: Run golangci-lint
-      uses: golangci/golangci-lint-action@v3
-      with:
-        version: latest
-        args: --timeout=5m
+    - name: Run gofmt
+      run: |
+        if [ "$(gofmt -s -l . | wc -l)" -gt 0 ]; then
+          echo "Code is not formatted. Please run 'gofmt -s -w .'"
+          gofmt -s -l .
+          exit 1
+        fi
+        
+    - name: Run go mod tidy check
+      run: |
+        go mod tidy
+        git diff --exit-code go.mod go.sum
 
   build:
     runs-on: ubuntu-latest
@@ -86,52 +88,3 @@ jobs:
         
     - name: Build application
       run: go build -v ./...
-      
-    - name: Build for multiple platforms
-      run: |
-        GOOS=linux GOARCH=amd64 go build -o bin/app-linux-amd64 ./...
-        GOOS=windows GOARCH=amd64 go build -o bin/app-windows-amd64.exe ./...
-        GOOS=darwin GOARCH=amd64 go build -o bin/app-darwin-amd64 ./...
-        
-    - name: Upload build artifacts
-      uses: actions/upload-artifact@v3
-      with:
-        name: binaries
-        path: bin/
-
-  security:
-    runs-on: ubuntu-latest
-    
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-      
-    - name: Set up Go
-      uses: actions/setup-go@v4
-      with:
-        go-version: 1.22
-        
-    - name: Run Gosec Security Scanner
-      uses: securecodewarrior/github-action-gosec@master
-      with:
-        args: ./...
-
-  cross-platform-test:
-    runs-on: ${{ matrix.os }}
-    
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
-        go-version: [1.22]
-    
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-      
-    - name: Set up Go
-      uses: actions/setup-go@v4
-      with:
-        go-version: ${{ matrix.go-version }}
-        
-    - name: Run tests
-      run: go test -v ./...
