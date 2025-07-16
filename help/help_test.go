@@ -37,8 +37,6 @@ func TestShowVersion(t *testing.T) {
 	// Test with empty version
 	ShowVersion("")
 
-	// Test with actual version
+	// Test with a valid version
 	ShowVersion("1.0.0")
-
-	// This test mainly ensures no panic occurs
 }
