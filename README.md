@@ -6,7 +6,7 @@ A simple, fast, and lightweight CLI tool to copy terminal output to clipboard.
 
 - 🚀 **Fast**: Written in Go, executes instantly
 - 📦 **Lightweight**: Single binary (~2MB), no dependencies
-- 🔄 **Cross-platform**: Works on Linux, macOS, and Windows
+- 🔄 **Cross-platform**: Works on Linux and macOS
 - 📋 **Simple**: Just pipe any command output to `ccopy`
 - 🎯 **Reliable**: Handles large outputs efficiently
 
@@ -70,9 +70,6 @@ docker ps --format "table {{.Names}}\t{{.Status}}" | ccopy
 
 ### macOS
 - **pbcopy** (built-in)
-
-### Windows
-- **PowerShell** (built-in)
 
 ## Examples
 
