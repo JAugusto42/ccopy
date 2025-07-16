@@ -17,8 +17,6 @@ build-all:
 	# macOS
 	GOOS=darwin GOARCH=amd64 go build -ldflags "-X main.Version=$(VERSION)" -o dist/$(BINARY_NAME)-macos-amd64 .
 	GOOS=darwin GOARCH=arm64 go build -ldflags "-X main.Version=$(VERSION)" -o dist/$(BINARY_NAME)-macos-arm64 .
-	# Windows
-	GOOS=windows GOARCH=amd64 go build -ldflags "-X main.Version=$(VERSION)" -o dist/$(BINARY_NAME)-windows-amd64.exe .
 
 # local install for linux and macOS
 install: build
@@ -50,7 +48,6 @@ release: clean build-all
 	tar -czf release/$(BINARY_NAME)-$(VERSION)-linux-arm64.tar.gz -C dist $(BINARY_NAME)-linux-arm64
 	tar -czf release/$(BINARY_NAME)-$(VERSION)-macos-amd64.tar.gz -C dist $(BINARY_NAME)-macos-amd64
 	tar -czf release/$(BINARY_NAME)-$(VERSION)-macos-arm64.tar.gz -C dist $(BINARY_NAME)-macos-arm64
-	zip -j release/$(BINARY_NAME)-$(VERSION)-windows-amd64.zip dist/$(BINARY_NAME)-windows-amd64.exe
 
 # Install dependencies for ubuntu/debian
 install-deps:
