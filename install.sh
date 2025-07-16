@@ -68,9 +68,10 @@ else
     echo "✅ $BINARY_NAME Installing $HOME/.local/bin/"
 
     if ! echo "$PATH" | grep -q "$HOME/.local/bin"; then
-        echo "⚠️  Add $HOME/.local/bin to the PATH:"
-        echo "    echo 'export PATH=\"\$HOME/.local/bin:\$PATH\"' >> ~/.bashrc"
-        echo "    source ~/.bashrc"
+        echo "⚠️  $HOME/.local/bin is not in your PATH."
+        echo "   To fix, run:"
+        echo "     echo 'export PATH=\"\$HOME/.local/bin:\$PATH\"' >> ~/.bashrc"
+        echo "     source ~/.bashrc"
     fi
 fi
 
