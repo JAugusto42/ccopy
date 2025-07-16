@@ -35,12 +35,14 @@ jobs:
         key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
         restore-keys: |
           ${{ runner.os }}-go-
+      if: hashFiles('go.mod') != ''
     
-    - name: Download dependencies
-      run: go mod download
-      
-    - name: Verify dependencies
-      run: go mod verify
+    - name: Download dependencies (if any)
+      run: |
+        if [ -f "go.mod" ]; then
+          go mod download
+          go mod verify
+        fi
       
     - name: Run vet
       run: go vet ./...
@@ -73,8 +75,14 @@ jobs:
         
     - name: Run go mod tidy check
       run: |
-        go mod tidy
-        git diff --exit-code go.mod go.sum
+        if [ -f "go.mod" ]; then
+          go mod tidy
+          if [ -f "go.sum" ]; then
+            git diff --exit-code go.mod go.sum
+          else
+            git diff --exit-code go.mod
+          fi
+        fi
 
   build:
     runs-on: ubuntu-latest
