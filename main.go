@@ -13,7 +13,6 @@ import (
 var Version = "development"
 
 func main() {
-	// Handle command line arguments
 	if len(os.Args) > 1 {
 		switch os.Args[1] {
 		case "-h", "--help":
@@ -28,7 +27,6 @@ func main() {
 		}
 	}
 
-	// Check if there's data in stdin
 	if !input.HasStdinData() {
 		help.Show()
 		return

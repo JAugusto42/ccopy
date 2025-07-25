@@ -34,9 +34,6 @@ func TestGetDependenciesText(t *testing.T) {
 }
 
 func TestShowVersion(t *testing.T) {
-	// Test with empty version
 	ShowVersion("")
-
-	// Test with a valid version
 	ShowVersion("1.0.0")
 }

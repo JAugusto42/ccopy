@@ -6,7 +6,6 @@ import (
 	"runtime"
 )
 
-// Copy copies the given text to the system clipboard
 func Copy(text string) error {
 	var cmd *exec.Cmd
 
@@ -31,7 +30,6 @@ func Copy(text string) error {
 		return fmt.Errorf("unsupported operating system: %s", runtime.GOOS)
 	}
 
-	// Send text to command
 	stdin, err := cmd.StdinPipe()
 	if err != nil {
 		return err
@@ -53,7 +51,6 @@ func Copy(text string) error {
 	return cmd.Wait()
 }
 
-// IsAvailable checks if clipboard functionality is available on the system
 func IsAvailable() bool {
 	switch runtime.GOOS {
 	case "linux":
@@ -71,7 +68,6 @@ func IsAvailable() bool {
 	}
 }
 
-// GetRequiredDependencies returns the required dependencies for the current OS
 func GetRequiredDependencies() []string {
 	switch runtime.GOOS {
 	case "linux":

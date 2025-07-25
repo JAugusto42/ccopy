@@ -9,7 +9,6 @@ BINARY_NAME="ccopy"
 GITHUB_REPO="JAugusto42/ccopy"
 VERSION="latest"
 
-# Detect operating system and architecture
 OS=$(uname -s | tr '[:upper:]' '[:lower:]')
 ARCH=$(uname -m)
 
@@ -26,7 +25,6 @@ case $ARCH in
         ;;
 esac
 
-# Verify if the OS is Linux
 if [ "$OS" != "linux" ]; then
     echo "Works only on Linux."
     exit 1
@@ -34,7 +32,6 @@ fi
 
 echo "🚀 Installing $BINARY_NAME for $OS-$ARCH..."
 
-# Create a temp dir
 TMP_DIR=$(mktemp -d)
 cd "$TMP_DIR"
 
@@ -55,10 +52,8 @@ if [ ! -f "$BINARY_NAME" ]; then
     exit 1
 fi
 
-# Make executable
 chmod +x "$BINARY_NAME"
 
-# Installing
 if [ -w "/usr/local/bin" ]; then
     mv "$BINARY_NAME" "/usr/local/bin/"
     echo "✅ $BINARY_NAME Installing /usr/local/bin/"

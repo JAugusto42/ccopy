@@ -25,8 +25,6 @@ func TestGetRequiredDependencies(t *testing.T) {
 }
 
 func TestIsAvailable(t *testing.T) {
-	// This test depends on system configuration
-	// We'll just ensure it doesn't panic
 	available := IsAvailable()
 	t.Logf("Clipboard available: %v", available)
 }
