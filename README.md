@@ -4,29 +4,17 @@ A simple, fast, and lightweight CLI tool to copy terminal output to clipboard.
 
 ## Features
 
-- 🚀 **Fast**: Written in Go, executes instantly
-- 📦 **Lightweight**: Single binary (~2MB), no dependencies
+- 🚀 **Fast**
+- 📦 **Lightweight**
 - 🔄 **Cross-platform**: Works on Linux and macOS
 - 📋 **Simple**: Just pipe any command output to `ccopy`
 - 🎯 **Reliable**: Handles large outputs efficiently
 
 ## Installation
 
-### Quick Install (Linux)
-
-```bash
-curl -sSL https://raw.githubusercontent.com/JAugusto42/ccopy/main/install.sh | bash
-```
-
-### Manual Installation
-
-1. Download the latest release for your platform from [releases page](https://github.com/JAugusto42/ccopy/releases)
-2. Extract the binary
-3. Move to your PATH:
+### Quick Install (Linux or Osx)
    ```bash
-   sudo mv ccopy /usr/local/bin/
-   # or for user-only install:
-   mkdir -p ~/.local/bin && mv ccopy ~/.local/bin/
+   gem install ccopy
    ```
 
 ### Build from Source
@@ -80,9 +68,6 @@ git log --oneline -10 | ccopy
 
 # Copy current directory structure
 tree | ccopy
-
-# Copy test results
-go test -v ./... | ccopy
 ```
 
 ### System Administration
@@ -99,9 +84,6 @@ ip addr show | ccopy
 
 ### File Processing
 ```bash
-# Copy file with syntax highlighting
-cat main.go | ccopy
-
 # Copy filtered logs
 tail -f /var/log/nginx/access.log | grep ERROR | ccopy
 
@@ -205,7 +187,7 @@ A: Yes, but clipboard integration depends on your terminal and SSH client config
 ## Alternatives
 
 - `xclip` - X11 clipboard utility
-- `xsel` - X selection utility  
+- `xsel` - X selection utility
 - `pbcopy` - macOS clipboard utility
 - `wl-clipboard` - Wayland clipboard utility
 
