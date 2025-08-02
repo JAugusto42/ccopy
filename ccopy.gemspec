@@ -8,16 +8,16 @@ Gem::Specification.new do |spec|
   spec.authors = ["Jose Augusto"]
   spec.email = ["joseaugusto.881@outlook.com"]
 
-  spec.summary = "TODO: Write a short summary, because RubyGems requires one."
-  spec.description = "TODO: Write a longer description or delete this line."
-  spec.homepage = "TODO: Put your gem's website or public repo URL here."
+  spec.summary = "CLI tool to copy stdin to clipboard"
+  spec.description = "A simple command-line tool that copies stdin output to the system clipboard. Perfect for piping command outputs directly to clipboard."
+  spec.homepage = "https://github.com/JAugusto42/ccopy"
   spec.license = "MIT"
   spec.required_ruby_version = ">= 3.2.0"
 
-  spec.metadata["allowed_push_host"] = "TODO: Set to your gem server 'https://example.com'"
+  spec.metadata["allowed_push_host"] = "https://rubygems.org"
   spec.metadata["homepage_uri"] = spec.homepage
-  spec.metadata["source_code_uri"] = "TODO: Put your gem's public repo URL here."
-    spec.metadata["changelog_uri"] = "TODO: Put your gem's CHANGELOG.md URL here."
+  spec.metadata["source_code_uri"] = "https://github.com/JAugusto42/ccopy"
+  spec.metadata["changelog_uri"] = "https://github.com/JAugusto42/ccopy/blob/main/CHANGELOG.md"
 
   # Specify which files should be added to the gem when it is released.
   # The `git ls-files -z` loads the files in the RubyGem that have been added into git.
