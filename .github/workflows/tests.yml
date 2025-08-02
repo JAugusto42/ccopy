@@ -1,4 +1,4 @@
-name: Go Tests
+name: Ruby Tests
 
 on:
   push:
@@ -9,93 +9,76 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    
+
     strategy:
       matrix:
-        go-version: [1.21, 1.22, 1.23]
-    
+        ruby-version: ['3.2', '3.3', '3.4']
+
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-      
-    - name: Set up Go
-      uses: actions/setup-go@v5
-      with:
-        go-version: ${{ matrix.go-version }}
-        
-    - name: Verify Go version
-      run: go version
-        
-    - name: Cache Go modules
-      uses: actions/cache@v3
-      with:
-        path: |
-          ~/.cache/go-build
-          ~/go/pkg/mod
-        key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
-        restore-keys: |
-          ${{ runner.os }}-go-
-      if: hashFiles('go.mod') != ''
-    
-    - name: Download dependencies (if any)
-      run: |
-        if [ -f "go.mod" ]; then
-          go mod download
-          go mod verify
-        fi
-      
-    - name: Run vet
-      run: go vet ./...
-      
-    - name: Run tests
-      run: go test -v -race -coverprofile=coverage.out ./...
-      
-    - name: Display coverage
-      run: go tool cover -func=coverage.out
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby-version }}
+          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+
+      - name: Verify Ruby version
+        run: ruby --version
+
+      - name: Install dependencies
+        run: bundle install
+
+      - name: Run RSpec tests
+        run: bundle exec rspec --format documentation
+
+      - name: Run RSpec with coverage
+        run: bundle exec rspec --format documentation
+        env:
+          COVERAGE: true
 
   lint:
     runs-on: ubuntu-latest
-    
+
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-      
-    - name: Set up Go
-      uses: actions/setup-go@v5
-      with:
-        go-version: 1.23
-        
-    - name: Run gofmt
-      run: |
-        if [ "$(gofmt -s -l . | wc -l)" -gt 0 ]; then
-          echo "Code is not formatted. Please run 'gofmt -s -w .'"
-          gofmt -s -l .
-          exit 1
-        fi
-        
-    - name: Run go mod tidy check
-      run: |
-        if [ -f "go.mod" ]; then
-          go mod tidy
-          if [ -f "go.sum" ]; then
-            git diff --exit-code go.mod go.sum
-          else
-            git diff --exit-code go.mod
-          fi
-        fi
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.4'
+          bundler-cache: true
+
+      - name: Run RuboCop
+        run: bundle exec rubocop
+
+      - name: Check Gemfile.lock
+        run: |
+          bundle install
+          git diff --exit-code Gemfile.lock
 
   build:
     runs-on: ubuntu-latest
     needs: [test, lint]
-    
+
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-      
-    - name: Set up Go
-      uses: actions/setup-go@v5
-      with:
-        go-version: 1.23
-        
-    - name: Build application
-      run: go build -v ./...
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.4'
+          bundler-cache: true
+
+      - name: Build gem
+        run: gem build ccopy.gemspec
+
+      - name: Install gem locally
+        run: gem install ./ccopy-*.gem
+
+      - name: Test CLI functionality
+        run: |
+          echo "test" | ccopy --help

@@ -1,6 +1,11 @@
 # frozen_string_literal: true
 
-require "ccopy"
+if ENV['COVERAGE']
+  require 'simplecov'
+  SimpleCov.start
+end
+
+require 'ccopy'
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
