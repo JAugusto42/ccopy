@@ -11,11 +11,7 @@ module Ccopy
       @debug = args.include?("--debug")
 
       if args.include?("-h") || args.include?("--help") || $stdin.tty?
-        puts "Usage: <command> | ccopy"
-        puts "Copy stdin to clipboard"
-        puts "Options:"
-        puts "  -h, --help     Show this help message"
-        puts "      --debug    Show debug information"
+        show_help
         return
       end
 
@@ -37,7 +33,7 @@ module Ccopy
         end
         debug_puts "pbcopy executed successfully"
       when /linux/
-        debug_puts "Usando xclip for Linux"
+        debug_puts "Using xclip for Linux"
         IO.popen("xclip -selection clipboard", "w") { |io| io.write(text) }
         debug_puts "xclip executed successfully"
       end
@@ -47,6 +43,29 @@ module Ccopy
         puts "Error class: #{e.class}"
         puts "Error backtrace: #{e.backtrace.join("\n")}"
       end
+    end
+
+    private
+
+    def self.show_help
+      puts "ccopy - Copy stdin to clipboard"
+      puts ""
+      puts "Usage:"
+      puts "  <command> | ccopy [options]"
+      puts ""
+      puts "Examples:"
+      puts "  cat file.txt | ccopy"
+      puts "  ls -la | ccopy"
+      puts "  echo 'hello world' | ccopy --debug"
+      puts "  curl -s api.example.com/data | ccopy"
+      puts ""
+      puts "Options:"
+      puts "  -h, --help     Show this help message"
+      puts "      --debug    Show debug information"
+      puts ""
+      puts "Description:"
+      puts "  ccopy reads from stdin and copies the content to the system clipboard."
+      puts "  Works on macOS (pbcopy) and Linux (xclip)."
     end
 
     def self.debug_puts(message)
