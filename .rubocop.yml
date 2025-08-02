@@ -1,9 +1,40 @@
 AllCops:
   TargetRubyVersion: 3.2
   NewCops: enable
+  UseCache: false
+  Server: false
+
+Metrics/AbcSize:
+  Max: 25
+
+Metrics/MethodLength:
+  Max: 25
+
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*'
+    - '*.gemspec'
 
 Style/StringLiterals:
   Enabled: false
 
-Metrics/LineLength:
+Layout/LineLength:
   Max: 120
+
+Metrics/ClassLength:
+  Max: 150
+
+Metrics/CyclomaticComplexity:
+  Max: 8
+
+Metrics/PerceivedComplexity:
+  Max: 8
+
+Style/Documentation:
+  Enabled: false
+
+Style/ClassVars:
+  Enabled: false
+
+Layout/AccessModifierIndentation:
+  EnforcedStyle: indent

@@ -96,7 +96,8 @@ RSpec.describe Ccopy do
           allow($stdin).to receive(:read).and_return("test")
 
           # Mock IO.popen to raise an error
-          allow(IO).to receive(:popen).with("xclip -selection clipboard", "w").and_raise(StandardError.new("Clipboard error"))
+          allow(IO).to receive(:popen).with("xclip -selection clipboard",
+                                            "w").and_raise(StandardError.new("Clipboard error"))
 
           expect { Ccopy::Main.call }.to output(/Error copying to clipboard: Clipboard error/).to_stdout
         end

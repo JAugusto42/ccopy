@@ -22,7 +22,7 @@ module Ccopy
 
     def self.copy_to_clipboard(text)
       debug_puts "Text to be copied: #{text.inspect}"
-      debug_puts "Host OS: #{RbConfig::CONFIG["host_os"]}"
+      debug_puts "Host OS: #{RbConfig::CONFIG['host_os']}"
 
       case RbConfig::CONFIG["host_os"]
       when /darwin/
@@ -44,8 +44,6 @@ module Ccopy
         puts "Error backtrace: #{e.backtrace.join("\n")}"
       end
     end
-
-    private
 
     def self.show_help
       puts "ccopy - Copy stdin to clipboard"
