@@ -22,8 +22,8 @@ A simple, fast, and lightweight CLI tool to copy terminal output to clipboard.
 ```bash
 git clone https://github.com/JAugusto42/ccopy.git
 cd ccopy
-make build
-make install
+gem build ccopy.gemspec
+gem install ccopy-version.gem
 ```
 
 ## Usage
@@ -91,28 +91,6 @@ tail -f /var/log/nginx/access.log | grep ERROR | ccopy
 grep -r "TODO" src/ | ccopy
 ```
 
-## Build Options
-
-```bash
-# Build for current platform
-make build
-
-# Build for all platforms
-make build-all
-
-# Install system-wide
-make install
-
-# Install for current user
-make install-user
-
-# Create release packages
-make release
-
-# Clean build artifacts
-make clean
-```
-
 ## Platform Support
 
 | Platform | Architecture | Status |
@@ -127,7 +105,7 @@ make clean
 1. Fork the repository
 2. Create a feature branch: `git checkout -b feature-name`
 3. Make your changes
-4. Run tests: `make test`
+4. Run tests: `rbenv`
 5. Submit a pull request
 
 ## License
@@ -157,8 +135,7 @@ sudo pacman -S xclip
 # Check if ccopy is in PATH
 which ccopy
 
-# If not, add to PATH (add to ~/.bashrc for persistence)
-export PATH="$HOME/.local/bin:$PATH"
+# Maybe you are using rbenv without set the the correct ruby version or rbenv init in your bashrc or zshrc for example.
 ```
 
 ### Large Output Issues
@@ -195,6 +172,6 @@ A: Yes, but clipboard integration depends on your terminal and SSH client config
 
 ### v1.0.0
 - Initial release
-- Cross-platform support
+- Cross-platform support (linux and macos only)
 - Automatic clipboard utility detection
 - Error handling and help system
