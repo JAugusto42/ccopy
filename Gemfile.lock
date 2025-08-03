@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    ccopy (0.1.0)
+    ccopy (1.0.0)
 
 GEM
   remote: https://rubygems.org/
