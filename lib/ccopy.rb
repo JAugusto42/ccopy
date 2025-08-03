@@ -46,24 +46,26 @@ module Ccopy
     end
 
     def self.show_help
-      puts "ccopy - Copy stdin to clipboard"
-      puts ""
-      puts "Usage:"
-      puts "  <command> | ccopy [options]"
-      puts ""
-      puts "Examples:"
-      puts "  cat file.txt | ccopy"
-      puts "  ls -la | ccopy"
-      puts "  echo 'hello world' | ccopy --debug"
-      puts "  curl -s api.example.com/data | ccopy"
-      puts ""
-      puts "Options:"
-      puts "  -h, --help     Show this help message"
-      puts "      --debug    Show debug information"
-      puts ""
-      puts "Description:"
-      puts "  ccopy reads from stdin and copies the content to the system clipboard."
-      puts "  Works on macOS (pbcopy) and Linux (xclip)."
+      puts <<~HELP
+        ccopy - Copy stdin to clipboard
+
+        Usage:
+          <command> | ccopy [options]
+
+        Examples:
+          cat file.txt | ccopy
+          ls -la | ccopy
+          echo 'hello world' | ccopy --debug
+          curl -s api.example.com/data | ccopy
+
+        Options:
+          -h, --help     Show this help message
+              --debug    Show debug information
+
+        Description:
+          ccopy reads from stdin and copies the content to the system clipboard.
+          Works on macOS (pbcopy) and Linux (xclip).
+      HELP
     end
 
     def self.debug_puts(message)
